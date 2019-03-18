@@ -13,5 +13,7 @@ namespace Forms.Views
         {
             InitializeComponent();
         }
+
+        protected override bool OnBackButtonPressed() => true;
     }
 }

@@ -10,5 +10,6 @@
         <Label Text="{Binding LastName} "/>
         <Label Text="{Binding IDPassport}" />
         <Label Text="{Binding DateOfBirth} "/>
+        <Button Text="Register" Command="{Binding Register}" />
     </StackLayout>
 </ContentPage>
