@@ -1,15 +1,19 @@
 ﻿using Forms.Android.Helpers;
 using Forms.Configuration;
 using Forms.Dto;
+using Forms.Essentials;
 using Forms.Views;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace Forms.ViewModels
 {
@@ -45,6 +49,10 @@ namespace Forms.ViewModels
             string firstName = parameters.GetValue<string>("firstName");
             string lastName = parameters.GetValue<string>("lastName");
             string idPassport = parameters.GetValue<string>("idPassport");
+
+            var location = GeolocationHelper.GetCurrentLocation().Result;
+            var lon = location.Longitude;
+            var lat = location.Latitude;
 
             _person = new Person { FirstName = firstName, LastName = lastName, IdPassport = idPassport };
             DisplaySummary();
