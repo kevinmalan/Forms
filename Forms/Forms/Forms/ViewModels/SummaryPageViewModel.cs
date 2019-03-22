@@ -23,6 +23,7 @@ namespace Forms.ViewModels
         private string _firstName;
         private string _idPassport;
         private string _lastName;
+        private string _address;
         private Person _person;
         private HttpClient _client;
         private readonly BypassSslValidationClientHandler _bypassSslHandler;
@@ -42,6 +43,7 @@ namespace Forms.ViewModels
         public string FirstName { get => _firstName; set => SetProperty(ref _firstName, value); }
         public string IDPassport { get => _idPassport; set => SetProperty(ref _idPassport, value); }
         public string LastName { get => _lastName; set => SetProperty(ref _lastName, value); }
+        public string Address { get => _address; set => SetProperty(ref _address, value); }
         public DelegateCommand Register { get; set; }
 
         public void OnNavigatingTo(INavigationParameters parameters)
@@ -50,12 +52,13 @@ namespace Forms.ViewModels
             string lastName = parameters.GetValue<string>("lastName");
             string idPassport = parameters.GetValue<string>("idPassport");
 
-            var location = GeolocationHelper.GetCurrentLocation().Result;
-            var lon = location.Longitude;
-            var lat = location.Latitude;
-
-            _person = new Person { FirstName = firstName, LastName = lastName, IdPassport = idPassport };
-            DisplaySummary();
+            Task.Run(async () =>
+            {
+                var location = await GeolocationHelper.GetCurrentLocation();
+                var address = await GeolocationHelper.GetLocationAddress(location.Latitude, location.Longitude);
+                _person = new Person { FirstName = firstName, LastName = lastName, IdPassport = idPassport, Address = address };
+                DisplaySummary();
+            });
         }
 
         private void DisplaySummary()
@@ -63,6 +66,7 @@ namespace Forms.ViewModels
             FirstName = _person.FirstName;
             LastName = _person.LastName;
             IDPassport = _person.IdPassport;
+            Address = _person.Address;
 
             if (DateTime.TryParseExact(_person.IdPassport.Substring(0, 6), "yyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateOfBirth))
                 DateOfBirth = dateOfBirth.ToString("dd MMM yyyy");
@@ -93,7 +97,7 @@ namespace Forms.ViewModels
 
             async void NavigateHome()
             {
-                await _navigationService.NavigateAsync(nameof(MainPage));
+                await _navigationService.NavigateAsync("/NavigationPage/MainPage");
             }
         }
     }

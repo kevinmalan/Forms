@@ -6,10 +6,11 @@
              x:Class="Forms.Views.SummaryPage">
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
         <Label Text="Summary" />
-        <Label Text="{Binding FirstName} "/>
-        <Label Text="{Binding LastName} "/>
+        <Label Text="{Binding FirstName}" Style="{StaticResource Header}"/>
+        <Label Text="{Binding LastName}" TextColor="{StaticResource SecondayColor}"/>
         <Label Text="{Binding IDPassport}" />
         <Label Text="{Binding DateOfBirth} "/>
+        <Label Text="{Binding Address}" />
         <Button Text="Register" Command="{Binding Register}" />
     </StackLayout>
 </ContentPage>
