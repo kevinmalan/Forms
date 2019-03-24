@@ -41,6 +41,8 @@ namespace Forms.Api.Controllers
         [HttpPost]
         public IActionResult Register([FromBody] Person person)
         {
+            var imageBytes = Convert.FromBase64String(person.ProfileImageBase64);
+
             return Ok();
         }
     }

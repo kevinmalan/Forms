@@ -16,9 +16,8 @@
         <Entry Text="{Binding IDPassport}" Keyboard="Numeric" />
 
         <Label Text="Photo" />
-        <Button Text="Use Camera" /> 
-        <Button Text="Upload from Storage" />
-
+        <Button Text="Use Camera" Command="{Binding TakePhotoCommand}" />
+        <Button Text="Upload from Storage" Command="{Binding UploadPhotoCommand}" />
         <Button Text="Next" Command="{Binding SubmitPersonalInfo}" />
     </StackLayout>
     

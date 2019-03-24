@@ -11,6 +11,7 @@
         <Label Text="{Binding IDPassport}" />
         <Label Text="{Binding DateOfBirth} "/>
         <Label Text="{Binding Address}" />
+        <Image Source="{Binding ProfileImageSource}" />
         <Button Text="Register" Command="{Binding Register}" />
     </StackLayout>
 </ContentPage>

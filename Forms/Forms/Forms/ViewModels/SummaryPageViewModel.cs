@@ -2,18 +2,16 @@
 using Forms.Configuration;
 using Forms.Dto;
 using Forms.Essentials;
-using Forms.Views;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
-using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace Forms.ViewModels
 {
@@ -24,8 +22,10 @@ namespace Forms.ViewModels
         private string _idPassport;
         private string _lastName;
         private string _address;
+        private ImageSource _profileImageSource;
         private Account _person;
         private HttpClient _client;
+        private byte[] _profileImageBytes;
         private readonly BypassSslValidationClientHandler _bypassSslHandler;
         private readonly INavigationService _navigationService;
         private readonly IConfiguration _configuration;
@@ -44,18 +44,21 @@ namespace Forms.ViewModels
         public string IDPassport { get => _idPassport; set => SetProperty(ref _idPassport, value); }
         public string LastName { get => _lastName; set => SetProperty(ref _lastName, value); }
         public string Address { get => _address; set => SetProperty(ref _address, value); }
+        public ImageSource ProfileImageSource { get => _profileImageSource; set => SetProperty(ref _profileImageSource, value); }
         public DelegateCommand Register { get; set; }
 
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
-            string firstName = parameters.GetValue<string>("firstName");
-            string lastName = parameters.GetValue<string>("lastName");
-            string idPassport = parameters.GetValue<string>("idPassport");
+            var firstName = parameters.GetValue<string>("firstName");
+            var lastName = parameters.GetValue<string>("lastName");
+            var idPassport = parameters.GetValue<string>("idPassport");
+            _profileImageBytes = parameters.GetValue<byte[]>("profilePhotoBytes");
 
+            var profileImageBase64 = Convert.ToBase64String(_profileImageBytes);
             var location = await GeolocationHelper.GetCurrentLocation();
             var address = await GeolocationHelper.GetLocationAddress(location.Latitude, location.Longitude);
 
-            _person = new Account { FirstName = firstName, LastName = lastName, IdPassport = idPassport, Address = address };
+            _person = new Account { FirstName = firstName, LastName = lastName, IdPassport = idPassport, Address = address, ProfileImageBase64 = profileImageBase64 };
             DisplaySummary();
         }
 
@@ -65,6 +68,7 @@ namespace Forms.ViewModels
             LastName = _person.LastName;
             IDPassport = _person.IdPassport;
             Address = _person.Address;
+            ProfileImageSource = ImageSource.FromStream(() => new MemoryStream(_profileImageBytes));
 
             if (DateTime.TryParseExact(_person.IdPassport.Substring(0, 6), "yyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateOfBirth))
                 DateOfBirth = dateOfBirth.ToString("dd MMM yyyy");
@@ -74,6 +78,7 @@ namespace Forms.ViewModels
         {
             string url = $"{_configuration.ApiBaseAddress}/account/register";
             string personJson = JsonConvert.SerializeObject(_person);
+
             var result = await _client.PostAsync(url, new StringContent(personJson, Encoding.UTF8, "application/json"));
 
             string message = result.IsSuccessStatusCode ?

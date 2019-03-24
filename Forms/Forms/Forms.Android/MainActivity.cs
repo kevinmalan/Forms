@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Autofac;
+using Plugin.CurrentActivity;
 using Prism;
 using Prism.Ioc;
 
@@ -16,6 +17,8 @@ namespace Forms.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            CrossCurrentActivity.Current.Init(this, bundle);
+
             base.OnCreate(bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
 
@@ -26,6 +29,7 @@ namespace Forms.Droid
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
