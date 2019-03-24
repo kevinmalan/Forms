@@ -39,7 +39,8 @@ namespace Forms
             containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();
             containerRegistry.RegisterForNavigation<SummaryPage, SummaryPageViewModel>();
             containerRegistry.RegisterInstance<IConfiguration>(GetConfiguration());
-            
+
+            containerRegistry.RegisterForNavigation<ListAccountsPage, ListAccountsPageViewModel>();
         }
 
         private Config GetConfiguration()

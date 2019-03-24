@@ -6,7 +6,8 @@
 
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
         <Label Text="Welcome to Xamarin Forms and Prism!" />
-        <Button Text="Begin" Command="{Binding BeginForm}" />
+        <Button Text="Register Account" Command="{Binding Register}" />
+        <Button Text="List Accounts" Command="{Binding ListAccounts}" />
     </StackLayout>
 
 </ContentPage>

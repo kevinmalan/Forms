@@ -15,6 +15,10 @@
         <Label Text="ID / Passport" />
         <Entry Text="{Binding IDPassport}" Keyboard="Numeric" />
 
+        <Label Text="Photo" />
+        <Button Text="Use Camera" /> 
+        <Button Text="Upload from Storage" />
+
         <Button Text="Next" Command="{Binding SubmitPersonalInfo}" />
     </StackLayout>
     

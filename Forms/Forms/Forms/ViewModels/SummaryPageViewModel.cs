@@ -24,7 +24,7 @@ namespace Forms.ViewModels
         private string _idPassport;
         private string _lastName;
         private string _address;
-        private Person _person;
+        private Account _person;
         private HttpClient _client;
         private readonly BypassSslValidationClientHandler _bypassSslHandler;
         private readonly INavigationService _navigationService;
@@ -46,19 +46,17 @@ namespace Forms.ViewModels
         public string Address { get => _address; set => SetProperty(ref _address, value); }
         public DelegateCommand Register { get; set; }
 
-        public void OnNavigatingTo(INavigationParameters parameters)
+        public async void OnNavigatingTo(INavigationParameters parameters)
         {
             string firstName = parameters.GetValue<string>("firstName");
             string lastName = parameters.GetValue<string>("lastName");
             string idPassport = parameters.GetValue<string>("idPassport");
 
-            Task.Run(async () =>
-            {
-                var location = await GeolocationHelper.GetCurrentLocation();
-                var address = await GeolocationHelper.GetLocationAddress(location.Latitude, location.Longitude);
-                _person = new Person { FirstName = firstName, LastName = lastName, IdPassport = idPassport, Address = address };
-                DisplaySummary();
-            });
+            var location = await GeolocationHelper.GetCurrentLocation();
+            var address = await GeolocationHelper.GetLocationAddress(location.Latitude, location.Longitude);
+
+            _person = new Account { FirstName = firstName, LastName = lastName, IdPassport = idPassport, Address = address };
+            DisplaySummary();
         }
 
         private void DisplaySummary()
@@ -74,7 +72,7 @@ namespace Forms.ViewModels
 
         public async void RegisterPerson()
         {
-            string url = _configuration.ApiBaseAddress;
+            string url = $"{_configuration.ApiBaseAddress}/account/register";
             string personJson = JsonConvert.SerializeObject(_person);
             var result = await _client.PostAsync(url, new StringContent(personJson, Encoding.UTF8, "application/json"));
 

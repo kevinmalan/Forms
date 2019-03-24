@@ -13,18 +13,26 @@ namespace Forms.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
         INavigationService _navigationService;
-        public DelegateCommand BeginForm { get; set; }
+        public DelegateCommand Register { get; set; }
+        public DelegateCommand ListAccounts { get; set; }
 
         public MainPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
             _navigationService = navigationService;
-            BeginForm = new DelegateCommand(NavigateRegistrationForm);
+            Register = new DelegateCommand(NavigateRegistrationForm);
+            ListAccounts = new DelegateCommand(NavigateListAccounts);
         }
 
         private async void NavigateRegistrationForm()
         {
             await _navigationService.NavigateAsync(nameof(RegisterPage));
         }
+
+        private async void NavigateListAccounts()
+        {
+            await _navigationService.NavigateAsync(nameof(ListAccountsPage));
+        }
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Forms.Dto
 {
-    public class Person
+    public class Account
     {
         public string FirstName { get; set; }
         public string IdPassport { get; set; }

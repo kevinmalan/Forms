@@ -16,15 +16,25 @@ namespace Forms.Api.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var p = new Person
+            var p1 = new Person
             {
                 FirstName = "Monty",
                 LastName = "Burns",
                 IdPassport = "5012171234567",
-                DateOfBirth = new DateTime(1990,12,17)
+                DateOfBirth = new DateTime(1950,12,17)
             };
 
-            return Ok(p);
+            var p2 = new Person
+            {
+                FirstName = "Cunty",
+                LastName = "Runds",
+                IdPassport = "6012171234567",
+                DateOfBirth = new DateTime(1960, 12, 17)
+            };
+
+            var pList = new List<Person> { p1, p2 };
+
+            return Ok(pList);
         }
 
         [Route("register")]
