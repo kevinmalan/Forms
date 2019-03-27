@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Forms.Api.Data;
 using Forms.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,36 +13,28 @@ namespace Forms.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
+        private readonly AccountDbContext _db;
+
+        public AccountController(AccountDbContext db)
+        {
+            _db = db;
+        }
+
         [Route("index")]
         [HttpGet]
         public IActionResult Index()
         {
-            var p1 = new Person
-            {
-                FirstName = "Monty",
-                LastName = "Burns",
-                IdPassport = "5012171234567",
-                DateOfBirth = new DateTime(1950,12,17)
-            };
+            var accounts = _db.Accounts.ToList();
 
-            var p2 = new Person
-            {
-                FirstName = "Cunty",
-                LastName = "Runds",
-                IdPassport = "6012171234567",
-                DateOfBirth = new DateTime(1960, 12, 17)
-            };
-
-            var pList = new List<Person> { p1, p2 };
-
-            return Ok(pList);
+            return Ok(accounts);
         }
 
         [Route("register")]
         [HttpPost]
-        public IActionResult Register([FromBody] Person person)
+        public IActionResult Register([FromBody] Account account)
         {
-            var imageBytes = Convert.FromBase64String(person.ProfileImageBase64);
+            _db.Accounts.Add(account);
+            _db.SaveChanges();
 
             return Ok();
         }

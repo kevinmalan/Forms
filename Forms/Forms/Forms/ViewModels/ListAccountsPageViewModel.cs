@@ -4,9 +4,12 @@ using Forms.Dto;
 using Forms.Parsers;
 using Prism.Mvvm;
 using Prism.Navigation;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Forms.ViewModels
 {
@@ -15,7 +18,7 @@ namespace Forms.ViewModels
         private readonly IConfiguration _configuration;
         private readonly HttpClient _client;
         private readonly BypassSslValidationClientHandler _bypassSslHandler;
-        private IList<Account> _accounts;
+        private IList<AccountDto> _accounts;
 
         public ListAccountsPageViewModel(IConfiguration configuration)
         {
@@ -24,7 +27,7 @@ namespace Forms.ViewModels
             _client = new HttpClient(_bypassSslHandler);
         }
 
-        public IList<Account> Accounts { get => _accounts; set => SetProperty(ref _accounts, value); }
+        public IList<AccountDto> Accounts { get => _accounts; set => SetProperty(ref _accounts, value); }
 
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
@@ -37,7 +40,29 @@ namespace Forms.ViewModels
             var accountsResponse = await _client.GetAsync(url);
             var accountsStream = await accountsResponse.Content.ReadAsStreamAsync();
 
-            Accounts = JsonHelper<IList<Account>>.Deserialize(accountsStream);
+            var accounts = JsonHelper<IList<Account>>.Deserialize(accountsStream);
+
+            BindAccountToView(accounts);
+        }
+
+        private void BindAccountToView(IList<Account> accounts)
+        {
+            IList<AccountDto> accountDtos = new List<AccountDto>();
+
+            foreach (var account in accounts)
+            {
+                accountDtos.Add(new AccountDto
+                {
+                    FirstName = account.FirstName,
+                    LastName = account.LastName,
+                    DateOfBirth = account.DateOfBirth.ToString("dd MMM yyyy"),
+                    Address = account.Address,
+                    IdPassport = account.IdPassport,
+                    ProfileImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(account.ProfileImageBase64)))
+                });
+            }
+
+            Accounts = accountDtos;
         }
     }
 }

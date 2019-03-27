@@ -58,7 +58,9 @@ namespace Forms.ViewModels
             var location = await GeolocationHelper.GetCurrentLocation();
             var address = await GeolocationHelper.GetLocationAddress(location.Latitude, location.Longitude);
 
-            _person = new Account { FirstName = firstName, LastName = lastName, IdPassport = idPassport, Address = address, ProfileImageBase64 = profileImageBase64 };
+            DateTime.TryParseExact(idPassport.Substring(0, 6), "yyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateOfBirth);
+
+            _person = new Account { FirstName = firstName, LastName = lastName, IdPassport = idPassport, DateOfBirth = dateOfBirth, Address = address, ProfileImageBase64 = profileImageBase64 };
             DisplaySummary();
         }
 
@@ -69,9 +71,7 @@ namespace Forms.ViewModels
             IDPassport = _person.IdPassport;
             Address = _person.Address;
             ProfileImageSource = ImageSource.FromStream(() => new MemoryStream(_profileImageBytes));
-
-            if (DateTime.TryParseExact(_person.IdPassport.Substring(0, 6), "yyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateOfBirth))
-                DateOfBirth = dateOfBirth.ToString("dd MMM yyyy");
+            DateOfBirth = _person.DateOfBirth.ToString("dd MMM yyyy");
         }
 
         public async void RegisterPerson()
