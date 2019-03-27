@@ -13,6 +13,14 @@
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="TextColor" Value="{StaticResource MainColor}" />
             </Style>
+            <Style x:Key="StatusSuccess" TargetType="Label">
+                <Setter Property="TextColor" Value="LimeGreen" />
+                <Setter Property="FontAttributes" Value="Bold, Italic" />
+            </Style>
+            <Style x:Key="StatusFailure" TargetType="Label">
+                <Setter Property="TextColor" Value="Red" />
+                <Setter Property="FontAttributes" Value="Bold, Italic" />
+            </Style>
         </ResourceDictionary>
 
 	</Application.Resources>

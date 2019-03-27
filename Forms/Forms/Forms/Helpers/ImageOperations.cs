@@ -13,6 +13,10 @@ namespace Forms.Helpers
         public static async Task<byte[]> GetCameraPhotoBytes()
         {
             var mediaFile = await GetCameraPhoto();
+
+            if (mediaFile == null)
+                return default(byte[]);
+
             var stream = mediaFile.GetStream();
 
             using (var ms = new MemoryStream())
@@ -26,6 +30,9 @@ namespace Forms.Helpers
         public static async Task<byte[]> GetGalleryPhotoBytes()
         {
             var mediaFile = await GetGalleryPhoto();
+
+            if (mediaFile == null)
+                return default(byte[]);
 
             var stream = mediaFile.GetStream();
 
