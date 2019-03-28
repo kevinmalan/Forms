@@ -45,7 +45,7 @@ namespace Forms.ViewModels
 
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
-            if (Accounts.Count == 0 || AccountStateManager.GetSize() > Accounts.Count)
+            if (Accounts.Count == 0 || AccountStateManager.GetSize() > Accounts.Count || await IsAccountsSyncedWithServer() == false)
                 await GetAccounts();
         }
 
@@ -57,6 +57,18 @@ namespace Forms.ViewModels
             var accounts = JsonHelper<IList<Account>>.Deserialize(accountsStream);
 
             BindAccountToView(accounts);
+        }
+
+        private async Task<bool> IsAccountsSyncedWithServer()
+        {
+            string url = $"{_configuration.ApiBaseAddress}/account/count";
+            var response = await  _client.GetAsync(url);
+            var stream = await response.Content.ReadAsStreamAsync();
+            int accountCount = JsonHelper<int>.Deserialize(stream);
+
+            var isSynced = accountCount == Accounts.Count;
+
+            return isSynced;
         }
 
         private void BindAccountToView(IList<Account> accounts)
@@ -76,7 +88,7 @@ namespace Forms.ViewModels
                 });
             }
 
-            AccountStateManager.SaveAccounts(accountDtos);
+            AccountStateManager.SaveAccounts(accountDtos, overwrite: true);
             Accounts = accountDtos;
         }
     }

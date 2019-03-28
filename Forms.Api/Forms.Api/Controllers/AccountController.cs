@@ -29,6 +29,15 @@ namespace Forms.Api.Controllers
             return Ok(accounts);
         }
 
+        [Route("count")]
+        [HttpGet]
+        public int GetAccountCount()
+        {
+            var count = _db.Accounts.Count();
+
+            return count;
+        }
+
         [Route("register")]
         [HttpPost]
         public IActionResult Register([FromBody] Account account)

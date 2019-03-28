@@ -7,8 +7,11 @@ namespace Forms.State
     {
         public static List<AccountDto> Accounts = new List<AccountDto>();
 
-        public static void SaveAccounts(IList<AccountDto> accounts)
+        public static void SaveAccounts(IList<AccountDto> accounts, bool overwrite = false)
         {
+            if (overwrite)
+                Accounts = new List<AccountDto>();
+
             Accounts.AddRange(accounts);
         }
 
