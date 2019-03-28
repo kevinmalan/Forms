@@ -45,7 +45,7 @@ namespace Forms.ViewModels
 
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
-            if (Accounts.Count == 0 || AccountStateManager.GetSize() > Accounts.Count || await IsAccountsSyncedWithServer() == false)
+            if (Accounts.Count == 0 || await IsAccountsSyncedWithServer() == false)
                 await GetAccounts();
         }
 
