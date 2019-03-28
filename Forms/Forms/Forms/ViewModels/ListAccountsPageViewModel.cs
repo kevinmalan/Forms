@@ -2,6 +2,7 @@
 using Forms.Configuration;
 using Forms.Dto;
 using Forms.Parsers;
+using Forms.State;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
@@ -27,11 +28,25 @@ namespace Forms.ViewModels
             _client = new HttpClient(_bypassSslHandler);
         }
 
-        public IList<AccountDto> Accounts { get => _accounts; set => SetProperty(ref _accounts, value); }
+        public IList<AccountDto> Accounts
+        {
+            get
+            {
+                if (_accounts == null)
+                    _accounts = AccountStateManager.GetAccounts();
+
+                return _accounts;
+            }
+            set
+            {
+                SetProperty(ref _accounts, value);
+            }
+        }
 
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
-            await GetAccounts();
+            if (Accounts.Count == 0 || AccountStateManager.GetSize() > Accounts.Count)
+                await GetAccounts();
         }
 
         private async Task GetAccounts()
@@ -39,7 +54,6 @@ namespace Forms.ViewModels
             string url = $"{_configuration.ApiBaseAddress}/account/index";
             var accountsResponse = await _client.GetAsync(url);
             var accountsStream = await accountsResponse.Content.ReadAsStreamAsync();
-
             var accounts = JsonHelper<IList<Account>>.Deserialize(accountsStream);
 
             BindAccountToView(accounts);
@@ -62,6 +76,7 @@ namespace Forms.ViewModels
                 });
             }
 
+            AccountStateManager.SaveAccounts(accountDtos);
             Accounts = accountDtos;
         }
     }

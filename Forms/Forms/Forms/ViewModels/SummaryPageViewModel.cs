@@ -2,11 +2,13 @@
 using Forms.Configuration;
 using Forms.Dto;
 using Forms.Essentials;
+using Forms.State;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
@@ -87,6 +89,17 @@ namespace Forms.ViewModels
 
             if (result.IsSuccessStatusCode)
             {
+                var accountDto = new AccountDto
+                {
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    Address = Address,
+                    IdPassport = IDPassport,
+                    DateOfBirth = DateOfBirth,
+                    ProfileImage = ProfileImageSource
+                };
+                AccountStateManager.SaveAccounts(new List<AccountDto> { accountDto });
+
                 await App.Current.MainPage.DisplayAlert("", message, "Ok");
                 NavigateHome();
             }
