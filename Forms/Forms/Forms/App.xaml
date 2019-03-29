@@ -6,12 +6,13 @@
 	<Application.Resources>
 
         <ResourceDictionary>
-            <Color x:Key="MainColor">Red</Color>
+            <Color x:Key="MainColor">Orange</Color>
             <Color x:Key="SecondayColor">Lime</Color>
             <Style x:Key="Header" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="TextColor" Value="{StaticResource MainColor}" />
+                <Setter Property="FontSize" Value="18" />
             </Style>
             <Style x:Key="StatusSuccess" TargetType="Label">
                 <Setter Property="TextColor" Value="LimeGreen" />
@@ -21,6 +22,19 @@
                 <Setter Property="TextColor" Value="Red" />
                 <Setter Property="FontAttributes" Value="Bold, Italic" />
             </Style>
+            <Style x:Key="ActionsLeft" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="LimeGreen"/>
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="TextColor" Value="Purple" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+            <Style x:Key="ActionsRight" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Purple"/>
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="TextColor" Value="LimeGreen" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
         </ResourceDictionary>
 
 	</Application.Resources>

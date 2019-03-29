@@ -5,23 +5,105 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Forms.Views.RegisterPage">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="First Name" />
-        <Entry Text="{Binding FirstName}" />
+    <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Text="Last Name" />
-        <Entry Text="{Binding LastName}" />
+            <Label Style="{StaticResource Header}" Text="First Name" Grid.Row="1" Grid.Column="2" />
+            <Entry Text="{Binding FirstName}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" />
+        </Grid>
 
-        <Label Text="ID / Passport" />
-        <Entry Text="{Binding IDPassport}" Keyboard="Numeric" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Text="Photo" />
-        <Button Text="Use Camera" Command="{Binding TakePhotoCommand}" />
-        <Button Text="Upload from Storage" Command="{Binding UploadPhotoCommand}" />
+            <Label Style="{StaticResource Header}" Text="Last Name" Grid.Row="0" Grid.Column="2" />
+            <Entry Text="{Binding LastName}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" />
+        </Grid>
 
-        <Label Style="{StaticResource StatusSuccess}" IsVisible="{Binding IsPhotoUploaded}" Text="Profile Photo Selected" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
 
-        <Button Text="Next" Command="{Binding SubmitPersonalInfo}" />
+            <Label Style="{StaticResource Header}" Text="ID / Passport" Grid.Row="0" Grid.Column="2" />
+            <Entry Text="{Binding IDPassport}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" />
+        </Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Style="{StaticResource Header}" Text="Photo" Grid.Row="0" Grid.Column="2" />
+            <Button Style="{StaticResource ActionsLeft}" Text="Camera" Command="{Binding TakePhotoCommand}" Grid.Row="1" Grid.Column="1" />
+            <Button Style="{StaticResource ActionsRight}" Text="Upload" Command="{Binding UploadPhotoCommand}" Grid.Row="1" Grid.Column="3" />
+        </Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Style="{StaticResource StatusSuccess}" IsVisible="{Binding IsPhotoUploaded}" FontSize="18" Text="Profile Photo Selected" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" />
+        </Grid>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Text="Next" Command="{Binding SubmitPersonalInfo}" Grid.Row="0" Grid.Column="2" />
+        </Grid>
     </StackLayout>
-
 </ContentPage>
