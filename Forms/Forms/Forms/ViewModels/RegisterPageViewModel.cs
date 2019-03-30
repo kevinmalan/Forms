@@ -3,6 +3,8 @@ using Forms.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using System.Linq;
+using Xamarin.Forms;
 
 namespace Forms.ViewModels
 {
@@ -19,8 +21,8 @@ namespace Forms.ViewModels
             _navigationService = navigationService;
             SubmitPersonalInfo = new DelegateCommand(NavigateToSummary, CanSubmit);
             ObserveProperties(SubmitPersonalInfo);
-            TakePhotoCommand = new DelegateCommand(TakePhoto);
-            UploadPhotoCommand = new DelegateCommand(UploadPhoto);
+            TakePhotoCommand = new DelegateCommand<object>(TakePhoto);
+            UploadPhotoCommand = new DelegateCommand<object>(UploadPhoto);
         }
 
         public string FirstName { get => _firstName; set => SetProperty(ref _firstName, value); }
@@ -29,8 +31,8 @@ namespace Forms.ViewModels
         public byte[] ProfilePhotoBytes { get => _profilePhotoBytes; set => SetProperty(ref _profilePhotoBytes, value); }
 
         public DelegateCommand SubmitPersonalInfo { get; set; }
-        public DelegateCommand TakePhotoCommand { get; set; }
-        public DelegateCommand UploadPhotoCommand { get; set; }
+        public DelegateCommand<object> TakePhotoCommand { get; set; }
+        public DelegateCommand<object> UploadPhotoCommand { get; set; }
 
         private bool CanSubmit()
         {
@@ -62,20 +64,33 @@ namespace Forms.ViewModels
             command.ObservesProperty(() => IsPhotoUploaded);
         }
 
-        private async void TakePhoto()
+        private async void TakePhoto(object sv)
         {
             ProfilePhotoBytes = await ImageOperations.GetCameraPhotoBytes();
 
             if (ProfilePhotoBytes != null)
                 IsPhotoUploaded = true;
+
+            ScrollToBottomOfPage(sv);
         }
 
-        private async void UploadPhoto()
+        private async void UploadPhoto(object sv)
         {
             ProfilePhotoBytes = await ImageOperations.GetGalleryPhotoBytes();
 
             if (ProfilePhotoBytes != null)
                 IsPhotoUploaded = true;
+
+            ScrollToBottomOfPage(sv);
+        }
+
+        private async void ScrollToBottomOfPage(object o)
+        {
+            ScrollView scrollView = o as ScrollView;
+
+            var nextButton = scrollView.FindByName<Label>("Bottom");
+
+            await scrollView.ScrollToAsync(nextButton, ScrollToPosition.End, true);
         }
 
         private bool _isPhotoUploaded = false;

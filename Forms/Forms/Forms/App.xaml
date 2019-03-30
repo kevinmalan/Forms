@@ -10,9 +10,13 @@
             <Color x:Key="SecondayColor">Lime</Color>
             <Style x:Key="Header" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="TextColor" Value="{StaticResource MainColor}" />
                 <Setter Property="FontSize" Value="18" />
+            </Style>
+            <Style x:Key="SecondayHeader" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="LimeGreen" />
+                <Setter Property="FontSize" Value="14" />
             </Style>
             <Style x:Key="StatusSuccess" TargetType="Label">
                 <Setter Property="TextColor" Value="LimeGreen" />
@@ -33,6 +37,10 @@
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="WidthRequest" Value="70" />
                 <Setter Property="HeightRequest" Value="70" />
+            </Style>
+            <Style x:Key="ProfileImageMain" TargetType="Image">
+                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="HeightRequest" Value="200" />
             </Style>
 
         </ResourceDictionary>

@@ -5,7 +5,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Forms.Views.RegisterPage">
 
-    <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+    <ScrollView x:Name="ScrollViewer" Orientation="Vertical" VerticalOptions="FillAndExpand">
         <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
             <Grid>
                 <Grid.RowDefinitions>
@@ -56,7 +56,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Style="{StaticResource Header}" Text="ID / Passport" Grid.Row="0" Grid.Column="2" />
-                <Entry Text="{Binding IDPassport}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" />
+                <Entry Keyboard="Numeric" Text="{Binding IDPassport}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" />
             </Grid>
 
             <Grid>
@@ -74,8 +74,8 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Style="{StaticResource Header}" Text="Photo" Grid.Row="0" Grid.Column="2" />
-                <ImageButton Style="{StaticResource CameraAction}" Command="{Binding TakePhotoCommand}" Grid.Row="1" Grid.Column="1" />
-                <ImageButton Style="{StaticResource GalleryAction}" Command="{Binding UploadPhotoCommand}" Grid.Row="1" Grid.Column="3" />
+                <ImageButton Style="{StaticResource CameraAction}" Command="{Binding TakePhotoCommand}" CommandParameter="{x:Reference ScrollViewer}" Grid.Row="1" Grid.Column="1" />
+                <ImageButton Style="{StaticResource GalleryAction}" Command="{Binding UploadPhotoCommand}" CommandParameter="{x:Reference ScrollViewer}" Grid.Row="1" Grid.Column="3" />
             </Grid>
 
             <Grid>
@@ -84,12 +84,12 @@
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Style="{StaticResource StatusSuccess}" IsVisible="{Binding IsPhotoUploaded}" FontSize="18" Text="Profile Photo Selected" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" />
+                <Label Style="{StaticResource StatusSuccess}" IsVisible="{Binding IsPhotoUploaded}" FontSize="18" Text="Photo Selected" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" />
             </Grid>
 
             <Grid>
@@ -99,13 +99,12 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Text="Next" Command="{Binding SubmitPersonalInfo}" Grid.Row="0" Grid.Column="2" />
+                <Button Text="Next" BackgroundColor="LimeGreen" Command="{Binding SubmitPersonalInfo}" Grid.Row="0" Grid.Column="1" />
+                <Label x:Name="Bottom" Grid.Row="1" />
             </Grid>
         </StackLayout>
     </ScrollView>
