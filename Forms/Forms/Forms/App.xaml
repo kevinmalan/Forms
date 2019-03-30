@@ -22,17 +22,17 @@
                 <Setter Property="TextColor" Value="Red" />
                 <Setter Property="FontAttributes" Value="Bold, Italic" />
             </Style>
-            <Style x:Key="ActionsLeft" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="LimeGreen"/>
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="TextColor" Value="Purple" />
-                <Setter Property="FontAttributes" Value="Bold" />
+            <Style x:Key="CameraAction" TargetType="ImageButton">
+                <Setter Property="Source" Value="camera.png" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="WidthRequest" Value="70" />
+                <Setter Property="HeightRequest" Value="70" />
             </Style>
-            <Style x:Key="ActionsRight" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="Purple"/>
-                <Setter Property="FontSize" Value="18" />
-                <Setter Property="TextColor" Value="LimeGreen" />
-                <Setter Property="FontAttributes" Value="Bold" />
+            <Style x:Key="GalleryAction" TargetType="ImageButton">
+                <Setter Property="Source" Value="gallery.png" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="WidthRequest" Value="70" />
+                <Setter Property="HeightRequest" Value="70" />
             </Style>
 
         </ResourceDictionary>
