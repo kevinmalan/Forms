@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Forms.Views.ListAccountsPage">
+             x:Class="Forms.Views.ListAccountsPage"
+             Title="Accounts">
     <StackLayout>
         <ListView HasUnevenRows="True" ItemsSource="{Binding Accounts}">
             <ListView.ItemTemplate>

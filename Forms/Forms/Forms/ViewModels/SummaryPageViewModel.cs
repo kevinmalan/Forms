@@ -24,6 +24,7 @@ namespace Forms.ViewModels
         private string _idPassport;
         private string _lastName;
         private string _address;
+        private string _fullName;
         private ImageSource _profileImageSource;
         private Account _person;
         private HttpClient _client;
@@ -46,6 +47,7 @@ namespace Forms.ViewModels
         public string IDPassport { get => _idPassport; set => SetProperty(ref _idPassport, value); }
         public string LastName { get => _lastName; set => SetProperty(ref _lastName, value); }
         public string Address { get => _address; set => SetProperty(ref _address, value); }
+        public string FullName { get => _fullName; set => SetProperty(ref _fullName, value); }
         public ImageSource ProfileImageSource { get => _profileImageSource; set => SetProperty(ref _profileImageSource, value); }
         public DelegateCommand Register { get; set; }
 
@@ -70,6 +72,7 @@ namespace Forms.ViewModels
         {
             FirstName = _person.FirstName;
             LastName = _person.LastName;
+            FullName = $"{FirstName} {LastName}";
             IDPassport = _person.IdPassport;
             Address = _person.Address;
             ProfileImageSource = ImageSource.FromStream(() => new MemoryStream(_profileImageBytes));

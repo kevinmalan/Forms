@@ -3,7 +3,6 @@ using Forms.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
-using System.Linq;
 using Xamarin.Forms;
 
 namespace Forms.ViewModels
@@ -88,9 +87,9 @@ namespace Forms.ViewModels
         {
             ScrollView scrollView = o as ScrollView;
 
-            var nextButton = scrollView.FindByName<Label>("Bottom");
+            var bottom = scrollView.FindByName<Label>("Bottom");
 
-            await scrollView.ScrollToAsync(nextButton, ScrollToPosition.End, true);
+            await scrollView.ScrollToAsync(bottom, ScrollToPosition.End, true);
         }
 
         private bool _isPhotoUploaded = false;
@@ -106,6 +105,5 @@ namespace Forms.ViewModels
                 SetProperty(ref _isPhotoUploaded, value);
             }
         }
-
     }
 }
