@@ -11,12 +11,30 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout>
-                            <Label Text="{Binding FirstName}" TextColor="{StaticResource MainColor}" />
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="20" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                 
+                                <Label Style="{StaticResource Header}" Text="{Binding FullName}" Grid.Row="0" Grid.Column="1"
+                                                            HorizontalOptions="StartAndExpand"
+                                                            VerticalOptions="CenterAndExpand" />
+                                <Image Source="{Binding ProfileImage}" WidthRequest="80" HeightRequest="80"
+                                                                        Grid.Row="0" Grid.Column="1"
+                                                                          HorizontalOptions="EndAndExpand"/>
+                            </Grid>
+                            <!--<Label Text="{Binding FirstName}" TextColor="{StaticResource MainColor}" />
                             <Label Text="{Binding LastName}" />
                             <Label Text="{Binding IdPassport}" />
                             <Label Text="{Binding Address}" />
                             <Label Text="{Binding DateOfBirth}" />
-                            <Image Source="{Binding ProfileImage}" WidthRequest="50" HeightRequest="50" />
+                            <Image Source="{Binding ProfileImage}" WidthRequest="50" HeightRequest="50" />-->
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

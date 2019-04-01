@@ -79,11 +79,7 @@ namespace Forms.ViewModels
             {
                 accountDtos.Add(new AccountDto
                 {
-                    FirstName = account.FirstName,
-                    LastName = account.LastName,
-                    DateOfBirth = account.DateOfBirth.ToString("dd MMM yyyy"),
-                    Address = account.Address,
-                    IdPassport = account.IdPassport,
+                    FullName = $"{account.FirstName} {account.LastName}",
                     ProfileImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(account.ProfileImageBase64)))
                 });
             }

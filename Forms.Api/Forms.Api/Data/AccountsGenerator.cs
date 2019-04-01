@@ -28,7 +28,7 @@ namespace Forms.Api.Data
                         Address = "123 Palm Avenue, Lynnwood, Pretoria, 0015, South Africa",
                         DateOfBirth = new DateTime(1985,01,15),
                         IdPassport = "8501155269083",
-                        ProfileImageBase64 = GetImageBase64String("FlowerBeatle.jpg")
+                        ProfileImageBase64 = GetImageBase64String("doctor.png")
                     },
                     new Account
                     {
@@ -37,7 +37,7 @@ namespace Forms.Api.Data
                         Address = "58 Rickson Drive, Centurion, Pretoria, 0014, South Africa",
                         DateOfBirth = new DateTime(1992,04,20),
                         IdPassport = "9204205269083",
-                        ProfileImageBase64 = GetImageBase64String("FlowerBeatle.jpg")
+                        ProfileImageBase64 = GetImageBase64String("seduca.png")
                     }
                 };
 
@@ -46,9 +46,9 @@ namespace Forms.Api.Data
             }
         }
 
-        private static string GetImageBase64String(string file)
+        private static string GetImageBase64String(string fileName)
         {
-            var path = $"{Environment.CurrentDirectory}/Content/{file}";
+            var path = $"{Environment.CurrentDirectory}/Content/{fileName}";
 
             byte[] imageArr = File.ReadAllBytes(path);
 

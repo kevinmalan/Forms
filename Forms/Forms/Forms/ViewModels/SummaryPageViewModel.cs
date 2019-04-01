@@ -94,8 +94,7 @@ namespace Forms.ViewModels
             {
                 var accountDto = new AccountDto
                 {
-                    FirstName = FirstName,
-                    LastName = LastName,
+                    FullName = $"{FirstName} {LastName}",
                     Address = Address,
                     IdPassport = IDPassport,
                     DateOfBirth = DateOfBirth,
