@@ -8,6 +8,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -62,7 +63,7 @@ namespace Forms.ViewModels
         private async Task<bool> IsAccountsSyncedWithServer()
         {
             string url = $"{_configuration.ApiBaseAddress}/account/count";
-            var response = await  _client.GetAsync(url);
+            var response = await _client.GetAsync(url);
             var stream = await response.Content.ReadAsStreamAsync();
             int accountCount = JsonHelper<int>.Deserialize(stream);
 
@@ -80,12 +81,13 @@ namespace Forms.ViewModels
                 accountDtos.Add(new AccountDto
                 {
                     FullName = $"{account.FirstName} {account.LastName}",
+                    DateTimeStamp = account.DateTimeStamp,
                     ProfileImage = ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(account.ProfileImageBase64)))
                 });
             }
 
             AccountStateManager.SaveAccounts(accountDtos, overwrite: true);
-            Accounts = accountDtos;
+            Accounts = accountDtos.OrderByDescending(a => a.DateTimeStamp).ToList();
         }
     }
 }

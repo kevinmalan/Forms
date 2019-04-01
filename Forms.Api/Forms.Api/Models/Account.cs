@@ -15,5 +15,6 @@ namespace Forms.Api.Models
         public DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
         public string ProfileImageBase64 { get; set; }
+        public DateTime DateTimeStamp { get; set; }
     }
 }

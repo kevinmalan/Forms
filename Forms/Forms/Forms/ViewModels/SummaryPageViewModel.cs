@@ -81,6 +81,9 @@ namespace Forms.ViewModels
 
         public async void RegisterPerson()
         {
+            DateTime dateTimeStamp = DateTime.Now;
+            _person.DateTimeStamp = dateTimeStamp;
+
             string url = $"{_configuration.ApiBaseAddress}/account/register";
             string personJson = JsonConvert.SerializeObject(_person);
 
@@ -98,7 +101,8 @@ namespace Forms.ViewModels
                     Address = Address,
                     IdPassport = IDPassport,
                     DateOfBirth = DateOfBirth,
-                    ProfileImage = ProfileImageSource
+                    ProfileImage = ProfileImageSource,
+                    DateTimeStamp = dateTimeStamp
                 };
                 AccountStateManager.SaveAccounts(new List<AccountDto> { accountDto });
 

@@ -28,7 +28,8 @@ namespace Forms.Api.Data
                         Address = "123 Palm Avenue, Lynnwood, Pretoria, 0015, South Africa",
                         DateOfBirth = new DateTime(1985,01,15),
                         IdPassport = "8501155269083",
-                        ProfileImageBase64 = GetImageBase64String("doctor.png")
+                        ProfileImageBase64 = GetImageBase64String("doctor.png"),
+                        DateTimeStamp = new DateTime(2000,01,01)
                     },
                     new Account
                     {
@@ -37,7 +38,8 @@ namespace Forms.Api.Data
                         Address = "58 Rickson Drive, Centurion, Pretoria, 0014, South Africa",
                         DateOfBirth = new DateTime(1992,04,20),
                         IdPassport = "9204205269083",
-                        ProfileImageBase64 = GetImageBase64String("seduca.png")
+                        ProfileImageBase64 = GetImageBase64String("seduca.png"),
+                        DateTimeStamp = new DateTime(2000,01,02)
                     }
                 };
 

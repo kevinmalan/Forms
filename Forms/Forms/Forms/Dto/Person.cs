@@ -13,6 +13,7 @@ namespace Forms.Dto
         public string LastName { get; set; }
         public string Address { get; set; }
         public string ProfileImageBase64 { get; set; }
+        public DateTime DateTimeStamp { get; set; }
     }
 
     public class AccountDto
@@ -22,6 +23,7 @@ namespace Forms.Dto
         public string FullName { get; set; }
         public string Address { get; set; }
         public ImageSource ProfileImage{ get; set; }
+        public DateTime DateTimeStamp { get; set; }
     }
 
 }

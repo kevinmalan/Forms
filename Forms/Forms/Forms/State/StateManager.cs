@@ -1,5 +1,6 @@
 ﻿using Forms.Dto;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Forms.State
 {
@@ -17,7 +18,9 @@ namespace Forms.State
 
         public static IList<AccountDto> GetAccounts()
         {
-            return Accounts;
+            var accounts = Accounts.OrderByDescending(a => a.DateTimeStamp).ToList();
+
+            return accounts;
         }
 
         public static int GetSize() => Accounts.Count;
