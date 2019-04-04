@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using Forms.Dto;
+using System;
+using Xamarin.Forms;
 
 namespace Forms.Views
 {

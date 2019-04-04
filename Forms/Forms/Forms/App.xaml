@@ -8,7 +8,8 @@
         <ResourceDictionary>
             <Color x:Key="MainColor">Orange</Color>
             <Color x:Key="SecondayColor">Lime</Color>
-
+            <Color x:Key="Danger">Red</Color>
+            <Color x:Key="Default">Black</Color>
             <Style x:Key="PageHeader" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="TextColor" Value="DodgerBlue" />
@@ -17,6 +18,16 @@
             <Style x:Key="Header" TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="TextColor" Value="{StaticResource MainColor}" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
+            <Style x:Key="HeaderDanger" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource Danger}" />
+                <Setter Property="FontSize" Value="18" />
+            </Style>
+            <Style x:Key="HeaderBlack" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource Default}" />
                 <Setter Property="FontSize" Value="18" />
             </Style>
             <Style x:Key="SecondayHeader" TargetType="Label">

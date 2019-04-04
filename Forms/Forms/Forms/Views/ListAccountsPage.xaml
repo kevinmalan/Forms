@@ -4,41 +4,73 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Forms.Views.ListAccountsPage"
+             x:Name="ListingPage"
              Title="Accounts">
     <StackLayout>
-        <ListView HasUnevenRows="True" ItemsSource="{Binding Accounts}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="20" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+        <StackLayout IsVisible="{Binding ShouldShowDeleteForm}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
 
-                                 
-                                <Label Style="{StaticResource Header}" Text="{Binding FullName}" Grid.Row="0" Grid.Column="1"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Style="{StaticResource HeaderBlack}" 
+                   Text="{Binding ConfirmedFullName, StringFormat='Enter ID/Pport number for: {0}'}"
+                   Grid.Row="1" Grid.Column="1"/>
+                <Entry Keyboard="Numeric" Text="{Binding IdPassportInputValue}" 
+                   Grid.Row="2" Grid.Column="1"/>
+                <Button BackgroundColor="{StaticResource Danger}" 
+                    Text="Delete" Command="{Binding DeleteAccountCommand}" 
+                    Grid.Row="3" Grid.Column="1"/>
+
+            </Grid>
+        </StackLayout>
+        <StackLayout>
+            <ListView x:Name="Accounts" 
+                  HasUnevenRows="True" 
+                  ItemsSource="{Binding Accounts}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="20" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.AccountTappedCommand, Source={x:Reference ListingPage}}"
+                                                          CommandParameter="{Binding .}"/>
+                                    </Grid.GestureRecognizers>
+
+                                    <Label Style="{StaticResource Header}" Text="{Binding FullName}" Grid.Row="0" Grid.Column="1"
                                                             HorizontalOptions="StartAndExpand"
-                                                            VerticalOptions="CenterAndExpand" />
-                                <Image Source="{Binding ProfileImage}" WidthRequest="80" HeightRequest="80"
+                                                            VerticalOptions="CenterAndExpand">
+                                    </Label>
+                                    <Image Source="{Binding ProfileImage}" WidthRequest="80" HeightRequest="80"
                                                                         Grid.Row="0" Grid.Column="1"
                                                                           HorizontalOptions="EndAndExpand"/>
-                            </Grid>
-                            <!--<Label Text="{Binding FirstName}" TextColor="{StaticResource MainColor}" />
-                            <Label Text="{Binding LastName}" />
-                            <Label Text="{Binding IdPassport}" />
-                            <Label Text="{Binding Address}" />
-                            <Label Text="{Binding DateOfBirth}" />
-                            <Image Source="{Binding ProfileImage}" WidthRequest="50" HeightRequest="50" />-->
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

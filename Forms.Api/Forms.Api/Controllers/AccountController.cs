@@ -47,5 +47,18 @@ namespace Forms.Api.Controllers
 
             return Ok();
         }
+
+        [Route("delete")]
+        [HttpPost]
+        public IActionResult Delete([FromBody] string idPassport)
+        {
+            var accountToDelete = _db.Accounts.First(a => a.IdPassport == idPassport);
+
+            _db.Accounts.Remove(accountToDelete);
+            _db.SaveChanges();
+
+            return Ok();
+        }
+
     }
 }

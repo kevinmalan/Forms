@@ -16,6 +16,13 @@ namespace Forms.State
             Accounts.AddRange(accounts);
         }
 
+        public static List<AccountDto> Remove(string idPassport)
+        {
+            Accounts = Accounts.Where(a => a.IdPassport != idPassport).ToList();
+
+            return Accounts;
+        }
+
         public static IList<AccountDto> GetAccounts()
         {
             var accounts = Accounts.OrderByDescending(a => a.DateTimeStamp).ToList();
