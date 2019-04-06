@@ -2,6 +2,7 @@
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -54,7 +55,7 @@ namespace Forms.Helpers
                 return null;
             }
 
-            var options = new Plugin.Media.Abstractions.StoreCameraMediaOptions
+            var options = new StoreCameraMediaOptions
             {
                 Directory = "Forms",
                 Name = $"FormsProfile{DateTime.Now.ToString("yyyyMMdd:hh:mm:ss")}.jpg",
@@ -62,7 +63,20 @@ namespace Forms.Helpers
                 CompressionQuality = 50
             };
 
-            var file = await CrossMedia.Current.TakePhotoAsync(options);
+            MediaFile file = null;
+
+            try
+            {
+                file = await CrossMedia.Current.TakePhotoAsync(options);
+            }
+            catch(MediaPermissionException e)
+            {
+                Debug.WriteLine($"Camera Permissions Not Authorized: {e.Message}");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Camera Access Issue: {e.Message}");
+            }
 
             return file;
         }
@@ -71,13 +85,26 @@ namespace Forms.Helpers
         {
             await CrossMedia.Current.Initialize();
 
-            var mediaOptions = new Plugin.Media.Abstractions.PickMediaOptions
+            var mediaOptions = new PickMediaOptions
             {
                 PhotoSize = PhotoSize.Medium,
                 CompressionQuality = 50
             };
 
-            var file = await CrossMedia.Current.PickPhotoAsync(mediaOptions);
+            MediaFile file = null;
+
+            try
+            {
+                file = await CrossMedia.Current.PickPhotoAsync(mediaOptions);
+            }
+            catch (MediaPermissionException e)
+            {
+                Debug.WriteLine($"Storage Permissions Not Authorized: {e.Message}");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Storage Access Issue: {e.Message}");
+            }
 
             return file;
         }

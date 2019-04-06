@@ -66,20 +66,20 @@ namespace Forms.ViewModels
         private async void TakePhoto(object sv)
         {
             ProfilePhotoBytes = await ImageOperations.GetCameraPhotoBytes();
+            if (ProfilePhotoBytes == null)
+                return;
 
-            if (ProfilePhotoBytes != null)
-                IsPhotoUploaded = true;
-
+            IsPhotoUploaded = true;
             ScrollToBottomOfPage(sv);
         }
 
         private async void UploadPhoto(object sv)
         {
             ProfilePhotoBytes = await ImageOperations.GetGalleryPhotoBytes();
+            if (ProfilePhotoBytes == null)
+                return;
 
-            if (ProfilePhotoBytes != null)
-                IsPhotoUploaded = true;
-
+            IsPhotoUploaded = true;
             ScrollToBottomOfPage(sv);
         }
 
