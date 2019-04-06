@@ -18,7 +18,7 @@ using Xamarin.Forms;
 
 namespace Forms.ViewModels
 {
-    public class ListAccountsPageViewModel : BindableBase, INavigatingAware
+    public class ListAccountsPageViewModel : BindableBase, INavigatedAware
     {
         private readonly IConfiguration _configuration;
         private readonly HttpClient _client;
@@ -28,6 +28,7 @@ namespace Forms.ViewModels
         private string _selectedIdPassport;
         private string _selectedFullName;
         private bool _shouldShowDeleteForm;
+        private bool _isLoading;
 
         public DelegateCommand<object> AccountTappedCommand { get; set; }
         public DelegateCommand DeleteAccountCommand { get; set; }
@@ -77,6 +78,7 @@ namespace Forms.ViewModels
         public string ConfirmedIdPassport { get => _selectedIdPassport; set => SetProperty(ref _selectedIdPassport, value); }
         public string ConfirmedFullName { get => _selectedFullName; set => SetProperty(ref _selectedFullName, value); }
         public string IdPassportInputValue { get => _idPassportInputValue; set => SetProperty(ref _idPassportInputValue, value); }
+        public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading, value); }
 
         public bool ShouldShowDeleteForm
         {
@@ -100,10 +102,14 @@ namespace Forms.ViewModels
             }
         }
 
-        public async void OnNavigatingTo(INavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
+            IsLoading = true;
+
             if (Accounts.Count == 0 || await IsAccountsSyncedWithServer() == false)
                 await GetAccounts();
+
+            IsLoading = false;
         }
 
         private async Task GetAccounts()
@@ -145,6 +151,10 @@ namespace Forms.ViewModels
 
             AccountStateManager.SaveAccounts(accountDtos, overwrite: true);
             Accounts = accountDtos.OrderByDescending(a => a.DateTimeStamp).ToList();
+        }
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
         }
     }
 }

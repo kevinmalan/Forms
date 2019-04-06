@@ -6,20 +6,21 @@
              x:Class="Forms.Views.SummaryPage"
              Title="Summary">
 
-    <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
-        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
 
+    <ScrollView Orientation="Vertical" VerticalOptions="FillAndExpand">
+        <StackLayout  Orientation="Vertical" VerticalOptions="FillAndExpand">
+            <ActivityIndicator VerticalOptions="Center" IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}" />
+            <StackLayout IsVisible="{Binding IsLoading, Converter={StaticResource InvertBool}}">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="20" />
-                    <RowDefinition Height="Auto" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Label Style="{StaticResource PageHeader}"  HorizontalOptions="CenterAndExpand" Text="Profile Summary" Grid.Row="1" Grid.Column="0" />
+                <Label Style="{StaticResource PageHeader}"  HorizontalOptions="CenterAndExpand" Text="Profile Summary" Grid.Row="0" Grid.Column="0" />
             </Grid>
 
             <Grid>
@@ -103,6 +104,7 @@
 
                 <Button Text="Register" BackgroundColor="LimeGreen" Command="{Binding Register}" Grid.Row="0" Grid.Column="1"  />
             </Grid>
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 </ContentPage>

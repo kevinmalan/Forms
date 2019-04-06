@@ -7,6 +7,7 @@
              x:Name="ListingPage"
              Title="Accounts">
     <StackLayout>
+        <ActivityIndicator VerticalOptions="Center" IsVisible="{Binding IsLoading}" IsRunning="{Binding IsLoading}" />
         <StackLayout IsVisible="{Binding ShouldShowDeleteForm}">
             <Grid>
                 <Grid.RowDefinitions>
@@ -31,10 +32,9 @@
                 <Button BackgroundColor="{StaticResource Danger}" 
                     Text="Delete" Command="{Binding DeleteAccountCommand}" 
                     Grid.Row="3" Grid.Column="1"/>
-
             </Grid>
         </StackLayout>
-        <StackLayout>
+        <StackLayout IsVisible="{Binding IsLoading, Converter={StaticResource InvertBool}}">
             <ListView x:Name="Accounts" 
                   HasUnevenRows="True" 
                   ItemsSource="{Binding Accounts}">

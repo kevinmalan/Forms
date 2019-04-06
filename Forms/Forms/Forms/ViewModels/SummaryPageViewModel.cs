@@ -13,11 +13,13 @@ using System.Globalization;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Forms.ViewModels
 {
-    public class SummaryPageViewModel : BindableBase, INavigatingAware
+    public class SummaryPageViewModel : BindableBase, INavigatedAware
     {
         private string _dateOfBirth;
         private string _firstName;
@@ -32,6 +34,7 @@ namespace Forms.ViewModels
         private readonly BypassSslValidationClientHandler _bypassSslHandler;
         private readonly INavigationService _navigationService;
         private readonly IConfiguration _configuration;
+        private bool _isLoading;
 
         public SummaryPageViewModel(INavigationService navigationService, IConfiguration configuration)
         {
@@ -50,9 +53,16 @@ namespace Forms.ViewModels
         public string FullName { get => _fullName; set => SetProperty(ref _fullName, value); }
         public ImageSource ProfileImageSource { get => _profileImageSource; set => SetProperty(ref _profileImageSource, value); }
         public DelegateCommand Register { get; set; }
+        public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading, value); }
 
-        public async void OnNavigatingTo(INavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
+            var currentThread = Environment.CurrentManagedThreadId;
+
+            IsLoading = true;
+
+            string address = null;
+
             var firstName = parameters.GetValue<string>("firstName");
             var lastName = parameters.GetValue<string>("lastName");
             var idPassport = parameters.GetValue<string>("idPassport");
@@ -60,11 +70,17 @@ namespace Forms.ViewModels
 
             var profileImageBase64 = Convert.ToBase64String(_profileImageBytes);
             var location = await GeolocationHelper.GetCurrentLocation();
-            var address = await GeolocationHelper.GetLocationAddress(location.Latitude, location.Longitude);
+
+            if (location != null)
+                address = await GeolocationHelper.GetLocationAddress(location.Latitude, location.Longitude);
+
+            // For Display Purposes only
+            await Task.Delay(800);
 
             DateTime.TryParseExact(idPassport.Substring(0, 6), "yyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateOfBirth);
 
-            _person = new Account { FirstName = firstName, LastName = lastName, IdPassport = idPassport, DateOfBirth = dateOfBirth, Address = address, ProfileImageBase64 = profileImageBase64 };
+            _person = new Account { FirstName = firstName, LastName = lastName, IdPassport = idPassport, DateOfBirth = dateOfBirth, Address = address ?? "Not Found", ProfileImageBase64 = profileImageBase64 };
+
             DisplaySummary();
         }
 
@@ -77,6 +93,7 @@ namespace Forms.ViewModels
             Address = _person.Address;
             ProfileImageSource = ImageSource.FromStream(() => new MemoryStream(_profileImageBytes));
             DateOfBirth = _person.DateOfBirth.ToString("dd MMM yyyy");
+            IsLoading = false;
         }
 
         public async void RegisterPerson()
@@ -121,6 +138,10 @@ namespace Forms.ViewModels
             {
                 await _navigationService.NavigateAsync("/NavigationPage/MainPage");
             }
+        }
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
         }
     }
 }
