@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Forms.Views.LogInPage">
+    <StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Style="{StaticResource PageHeader}" Text="Log In" HorizontalOptions="CenterAndExpand" />
+            <Entry Grid.Row="1" Text="{Binding Username}" WidthRequest="300" HorizontalOptions="CenterAndExpand" />
+            <Entry Grid.Row="2" Text="{Binding Password}" WidthRequest="300" HorizontalOptions="CenterAndExpand" />
+            <Button Grid.Row="3" Command="{Binding LogInCommand}" WidthRequest="300" Text="Log In"  HorizontalOptions="CenterAndExpand" />
+        </Grid>
+    </StackLayout>
+
+</ContentPage>

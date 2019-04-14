@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Runtime;
 using Autofac;
 using Plugin.CurrentActivity;
+using Plugin.Fingerprint;
 using Prism;
 using Prism.Ioc;
 
@@ -18,6 +19,7 @@ namespace Forms.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             CrossCurrentActivity.Current.Init(this, bundle);
+            CrossFingerprint.SetCurrentActivityResolver(() => CrossCurrentActivity.Current.Activity);
 
             base.OnCreate(bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
